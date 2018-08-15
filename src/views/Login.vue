@@ -6,10 +6,10 @@
           </el-form-item>
           
       <el-form-item prop='username'>
-        <el-input v-model="form.username" ></el-input>
+        <el-input v-model="form.username" prefix-icon="el-icon-service"></el-input>
       </el-form-item>
       <el-form-item prop='password'>
-        <el-input v-model="form.password" type='password'></el-input>
+        <el-input v-model="form.password" type='password' prefix-icon="el-icon-service"></el-input>
       </el-form-item>
       <el-button type="primary" class="btn" @click="submitForm('form')">登陆</el-button>
      </el-form>

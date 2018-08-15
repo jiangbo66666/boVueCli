@@ -18,6 +18,25 @@ var router = new VueRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('mytoken')
+  if(token){
+    if(to.path == '/login'){
+      next({path:'/'})
+    }else{
+      next()
+    }
+  }else{
+    // next({path:'/login'})
+    if(to.path!=='/login'){
+    next({path:'/login'})
+    }else{
+      next()
+    }
+   
+  }
+})
+
 Vue.config.productionTip = false
 
 new Vue({
