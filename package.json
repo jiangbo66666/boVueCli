@@ -1,5 +1,5 @@
 {
-  "name": "bogege",
+  "name": "03-webpack-cli",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,34 +9,30 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.4.6",
-    "less": "^3.8.1",
-    "less-loader": "^4.1.0",
-    "sass-loader": "^7.1.0",
-    "scss-loader": "0.0.1",
-    "style-loader": "^0.22.1",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "element-ui": "^2.3.8",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0",
-    "@vue/cli-plugin-eslint": "^3.0.0",
-    "@vue/cli-service": "^3.0.0",
-    "vue-template-compiler": "^2.5.17"
+    "@vue/cli-plugin-babel": "^3.0.0-beta.10",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.10",
+    "@vue/cli-service": "^3.0.0-beta.10",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
   },
   "eslintConfig": {
     "root": true,
-    "env": {
-      "node": true
-    },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
+    ]
   },
   "postcss": {
     "plugins": {
