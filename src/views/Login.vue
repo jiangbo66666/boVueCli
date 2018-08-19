@@ -48,7 +48,9 @@ export default {
           confirmlogin(this.form).then(res=>{
             if(res.meta.status==200){
               localStorage.setItem('mytoken',res.data.token)
+              localStorage.setItem('username',res.data.username)
               this.$router.push('/')
+              this.$store.commit('getname', res.data.username)
             }else{
               this.passworry(res.meta.msg)
             }

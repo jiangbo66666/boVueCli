@@ -3,28 +3,25 @@
     <el-container>
       <el-aside width="auto">
         <div class="logo"></div>
-        <el-menu
-            default-active="1-1"
-            class="el-menu-admin"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            :collapse="isCollapse">
-          <el-submenu index="1">
+        <el-menu class="el-menu-admin" @open="handleOpen" @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :router='true' :unique-opened='true'>
+          <el-submenu index="/user">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>用户管理</span>
             </template>
-            <el-menu-item index="1-1"><i class="el-icon-menu"></i>选项2</el-menu-item>
+            <el-menu-item index="/user">
+              <i class="el-icon-menu"></i>用户列表
+            </el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>权限管理</span>
             </template>
-            <el-menu-item index="2-2"><i class="el-icon-menu"></i>选项2</el-menu-item>
+            <el-menu-item index="/rights">
+              <i class="el-icon-menu"></i>权限列表</el-menu-item>
+            <el-menu-item index="/roles">
+              <i class="el-icon-menu"></i>权限管理2</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -34,7 +31,7 @@
           <div class="system-title">电商后台管理系统</div>
           <div>
             <span class="welcome">
-              您好，xxx
+              您好 {{$store.state.username}}
             </span>
             <el-button type="text" @click="logout">退出</el-button>
           </div>
@@ -64,8 +61,8 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     logout() {
-      localStorage.setItem("mytoken", "");
-      this.$router.push('/login');
+      localStorage.removeItem("mytoken");
+      this.$router.push("/login");
     }
   }
 };
