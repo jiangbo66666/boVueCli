@@ -60,3 +60,8 @@ export const deluserrights = (params) => {
 export const allrightslist = (params) =>{
   return axios.get(`rights/${params}`).then(res=>res.data)
 }
+
+//提交授权
+export const subuserrights = (roleId,params)=>{
+  return axios.post(`roles/${roleId}/rights`,params).then(res=>res.data)
+}

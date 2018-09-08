@@ -180,6 +180,11 @@ export default {
       userList({
         params: { query: "", pagesize: this.pagesize, pagenum: this.pagenum }
       }).then(res => {
+        console.log(res)
+        if(res.meta.status==400&&res.meta.msg=='无效token'){
+          localStorage.removeItem('mytoken')
+          this.$router.push('/login')
+        }
         this.total = res.data.total;
         console.log(res.data)
         this.users = res.data.users;

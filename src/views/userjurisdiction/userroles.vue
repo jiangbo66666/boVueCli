@@ -52,18 +52,22 @@
       </el-table-column>
     </el-table>
     <el-dialog title="用户权限树状图" :visible.sync="treeFormVisible">
-      <el-tree :data="data2" show-checkbox default-expand-all node-key="id" ref="tree" highlight-current :props="defaultProps" 
-  :default-checked-keys="keys">
+      <el-tree :data="data2" show-checkbox default-expand-all node-key="id" ref="tree" highlight-current :props="defaultProps" :default-checked-keys="keys">
       </el-tree>
       <div slot="footer" class="dialog-footer">
         <el-button @click="treeFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="treeFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="subtree()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { userroles, deluserrights ,allrightslist} from "../../api/api.js";
+import {
+  userroles,
+  deluserrights,
+  allrightslist,
+  subuserrights
+} from "../../api/api.js";
 
 export default {
   data() {
@@ -71,11 +75,12 @@ export default {
       userlist: [],
       treeFormVisible: false,
       data2: [],
-      keys:[],
+      keys: [],
       defaultProps: {
         children: "children",
         label: "authName"
-      }
+      },
+      rowid: 0
     };
   },
   mounted() {
@@ -85,6 +90,28 @@ export default {
     });
   },
   methods: {
+    subtree() {
+      this.treeFormVisible = false;
+      this.getCheckedKeys();
+    },
+    getCheckedKeys() {
+      let ids = this.$refs.tree.getCheckedKeys().join(",");
+      console.log(ids);
+      console.log(typeof this.rowid);
+      subuserrights(this.rowid, { rids: ids }).then(res => {
+        // console.log(res);
+        if (res.meta.status == 200) {
+          this.$message({
+            message: "修改权限成功",
+            type: "success"
+          });
+        }
+        userroles().then(res => {
+          this.userlist = res.data;
+          console.log(res.data);
+        });
+      });
+    },
     deluserrig(row, rolesid) {
       // deluserrights
       console.log(row);
@@ -95,20 +122,19 @@ export default {
     },
     showusertree(scope) {
       this.treeFormVisible = true;
-      allrightslist('tree').then(res=>{
-        this.data2=res.data
-      })
-      // console.log(scope.row.children)
-      let child = scope.row.children
-      this.keys.length = 0
-      child.forEach((one)=>{
-        one.children.forEach(two=>{
-          two.children.forEach((three)=>{
-            // console.log(three.id)
-            this.keys.push(three.id)
-          })
-        })
-      })
+      this.rowid = scope.row.id;
+      allrightslist("tree").then(res => {
+        this.data2 = res.data;
+      });
+      let child = scope.row.children;
+      this.keys.length = 0;
+      child.forEach(one => {
+        one.children.forEach(two => {
+          two.children.forEach(three => {
+            this.keys.push(three.id);
+          });
+        });
+      });
     }
   }
 };
